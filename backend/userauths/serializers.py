@@ -59,8 +59,15 @@ class UserSerializer(BaseUserSerializer):
     
     class Meta(BaseUserSerializer.Meta):
         model = User
-        fields = ['id', 'username', 'email', 'full_name', 'phone']
+        fields = ['id', 'username', 'email', 'full_name', 'phone','is_verify_phone']
 
+
+
+class verifyPhoneSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'full_name', 'phone','is_verify_phone','otp']
+        read_only_fields=['id', 'username', 'email', 'full_name', 'phone','is_verify_phone']
 
 class EmailVerificationUserSerializer(BaseUserSerializer):
     class Meta:

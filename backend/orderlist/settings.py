@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'drf_yasg',
+    'rest_framework.authtoken',
+    'django_filters',
+    'rest_framework_simplejwt',
 ]
 
 
@@ -217,10 +220,13 @@ INTERNAL_IPS = [
     "127.0.0.1",
     ]
 
-
-DJOSER = {
-    'SERIALIZERS': {
-        'user_create': 'userauths.serializers.RegisterSerializer',
-        'current_user': 'userauths.serializers.UserSerializer'
-    }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication')
 }
+
+
+
+KAVENEGAR_API_KEY= '556B7849327766644B58666642654F5538304B377168734C31746561426262586143722F592B69587753513D'

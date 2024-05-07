@@ -14,12 +14,14 @@ from userauths.serializers import (
     UserSerializer,
     ProfileSerializer,
     EmailVerificationUserSerializer,
+    verifyPhoneSerializers,
 )
-
+from django.shortcuts import get_object_or_404
+from django.conf import settings
 import random
 import shortuuid
 from kavenegar import *
-
+from kavenegar import *
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
@@ -61,24 +63,57 @@ class Email_Verification(generics.RetrieveAPIView):
         return user
 
 
-class Phone_Verification(generics.RetrieveAPIView):
-    permission_classes = (AllowAny,)
+class Phone_Verification_send_sms(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
     def get_object(self):
-        phone = self.kwargs['phone']
-        user = User.objects.get(phone=phone)
+        user = self.request.user
+        
 
-        if user:
+        if user and user.is_verify_phone==False:
             user.otp = generate_otp_sms()
             user.save()
-            message = f"سلام کد تایید شما {user.otp}"
-            sending_sms(phone,message)
-            # link = f"http://localhost:8000/email-verification?otp={otp}&uidb64={uidb64}"
+            message = f"سلام کد تایید شما {user.otp} می باشد."
+            self.send_sms(user.phone, message)
 
         return user
 
+    def send_sms(self, receivers, message):
+        api_key = settings.KAVENEGAR_API_KEY
+        try:
+            api = KavenegarAPI(api_key)
+            params = {
+                'sender': '10006926',
+                'receptor': str(receivers),
+                'message': message,
+            } 
+            response = api.sms_send(params)
+            print(response)
+        except APIException as e: 
+            print(e)
+        except HTTPException as e: 
+            print(e)
 
 
+class Phone_Verification(generics.UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = verifyPhoneSerializers
+
+    def get_object(self):
+        user = self.request.user
+        return user
+    
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        if user.otp == serializer.validated_data.get('otp'):
+            user.is_verify_phone = True
+            user.save()
+            
+            return Response(serializer.data)
+        else:
+            return Response({'detail': 'Invalid OTP or unauthorized user.'}, status=status.HTTP_400_BAD_REQUEST)
 
 class PasswordResetEmailVerify(generics.RetrieveAPIView):
     permission_classes = (AllowAny,)
@@ -152,19 +187,21 @@ class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
             return Response(serializer.data)
         
 
-def sending_sms(receivers,message):
-    
-    api_key = '556B7849327766644B58666642654F5538304B377168734C31746561426262586143722F592B69587753513D'
-    try:
-        api = KavenegarAPI(api_key, timeout=20)
-        params = {
-            'sender': '10006926',
-            'receptor': str(receivers),
-            'message': message,
-        } 
-        response = api.sms_send(params)
-        print(response)
-    except APIException as e: 
-        print(e)
-    except HTTPException as e: 
-        print(e)
+# async def sending_sms(receivers,message):
+#     print(receivers,message)
+#     api_key = 
+#     try:
+#         api = KavenegarAPI(api_key, timeout=20)
+#         params = {
+#             'sender': '10006926',
+#             'receptor': str(receivers),
+#             'message': message,
+#         } 
+#         response = api.sms_send(params)
+#         print(response)
+#     except APIException as e: 
+#         print(e)
+#     except HTTPException as e: 
+#         print(e)
+
+
