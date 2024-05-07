@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
-from vendor.models import Part
+from vendor.models import Part, Vendor
     
 # Create your models
 class Vendee(models.Model):
@@ -48,3 +48,13 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='items')
     quantity = models.PositiveSmallIntegerField()
     part = models.ForeignKey(Part, on_delete=models.CASCADE)
+    
+
+class SelectedVendor(models.Model):
+    """Represents Selected Vendors"""
+    vendee = models.OneToOneField(Vendee, on_delete=models.CASCADE)
+    vendor = models.ManyToManyField(Vendor)
+    
+    class Meta:
+        db_table = 'SelectedVendor'
+        verbose_name_plural = 'SelectedVendors'
