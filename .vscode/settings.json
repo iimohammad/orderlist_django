@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "abcdefghijk",
         "colour",
         "djmoney",
         "djoser",
@@ -12,6 +13,7 @@
         "shortuuid",
         "simplejwt",
         "uidb",
+        "userauth",
         "userauths",
         "viewsets",
         "yasg",
