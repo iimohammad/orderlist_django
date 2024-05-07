@@ -58,3 +58,6 @@ class SelectedVendor(models.Model):
     class Meta:
         db_table = 'SelectedVendor'
         verbose_name_plural = 'SelectedVendors'
+        
+    def __str__(self):
+        return self.vendee.user.username
