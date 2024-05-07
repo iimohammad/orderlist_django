@@ -1,4 +1,4 @@
-from .models import Vendee, Order, OrderItem
+from .models import Vendee, Order, OrderItem, SelectedVendor
 from rest_framework import serializers
 
 class VendeeSerializer(serializers.ModelSerializer):
@@ -25,3 +25,10 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'vendee', 'placed_at', 'status', 'items']
+        
+        
+class SelectedVendorSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = SelectedVendor
+        fields = ['id', 'vendee', 'vendor']

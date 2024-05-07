@@ -5,9 +5,17 @@
         "djoser",
         "dotenv",
         "jazzmin",
+        "kavenegar",
+        "orderitem",
         "orderlist",
+        "Selecte",
+        "shortuuid",
         "simplejwt",
+        "uidb",
         "userauths",
-        "yasg"
+        "viewsets",
+        "yasg",
+        "تایید",
+        "سلام"
     ]
 }

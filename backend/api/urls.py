@@ -20,6 +20,7 @@ router.register('vendors/parts', vendor_views.PartViewSet)
 router.register('store/vendees', store_views.VendeeViewSet)
 router.register('store/orders', store_views.OrderViewSet)
 router.register('store/order-items', store_views.OrderItemViewSet)
+router.register('store/selected-vendors', store_views.SelecteVendorViewSet)
 
 urlpatterns = [
     path('user/token/', userauth_views.MyTokenObtainPairView.as_view()),
