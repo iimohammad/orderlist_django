@@ -43,7 +43,7 @@ def generate_otp_sms():
 
 class Email_Verification(generics.RetrieveAPIView):
     permission_classes = (AllowAny,)
-    serializer_class = EmailVerificationUserSerializer
+    serializer_class = UserSerializer
     def get_object(self):
         email = self.kwargs['email']
         user = User.objects.get(email=email)
@@ -59,7 +59,27 @@ class Email_Verification(generics.RetrieveAPIView):
 
             print("link====",link)
         return user
-    
+
+
+class Phone_Verification(generics.RetrieveAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
+    def get_object(self):
+        phone = self.kwargs['phone']
+        user = User.objects.get(phone=phone)
+
+        if user:
+            user.otp = generate_otp_sms()
+            user.save()
+            message = f"سلام کد تایید شما {user.otp}"
+            sending_sms(phone,message)
+            # link = f"http://localhost:8000/email-verification?otp={otp}&uidb64={uidb64}"
+
+        return user
+
+
+
+
 class PasswordResetEmailVerify(generics.RetrieveAPIView):
     permission_classes = (AllowAny,)
     serializer_class = EmailVerificationUserSerializer
@@ -74,7 +94,7 @@ class PasswordResetEmailVerify(generics.RetrieveAPIView):
 
             uidb64=user.pk
             otp = user.otp
-
+            
             link = f"http://localhost:5173/create-new-password?otp={otp}&uidb64={uidb64}"
 
             print("link====",link)
@@ -132,7 +152,7 @@ class ProfileViewSet(RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
             return Response(serializer.data)
         
 
-def sending_sms(receivers,):
+def sending_sms(receivers,message):
     
     api_key = '556B7849327766644B58666642654F5538304B377168734C31746561426262586143722F592B69587753513D'
     try:
@@ -140,7 +160,7 @@ def sending_sms(receivers,):
         params = {
             'sender': '10006926',
             'receptor': str(receivers),
-            'message': 'slm',
+            'message': message,
         } 
         response = api.sms_send(params)
         print(response)
