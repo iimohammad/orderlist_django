@@ -1,0 +1,23 @@
+{
+    "cSpell.words": [
+        "abcdefghijk",
+        "colour",
+        "djmoney",
+        "djoser",
+        "dotenv",
+        "jazzmin",
+        "orderitem",
+        "orderitems",
+        "orderlist",
+        "phonenumbers",
+        "phonenumberutil",
+        "shortuuid",
+        "simplejwt",
+        "uidb",
+        "userauth",
+        "userauths",
+        "viewsets",
+        "yasg"
+    ],
+    "typescript.tsserver.web.projectWideIntellisense.enabled": true
+}
