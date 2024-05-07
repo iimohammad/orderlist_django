@@ -5,4 +5,3 @@ from .models import Vendee, Order, OrderItem
 admin.site.register(Vendee)
 admin.site.register(Order)
 admin.site.register(OrderItem)
-#finish
