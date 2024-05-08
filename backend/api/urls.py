@@ -12,14 +12,17 @@ router.register('user/profiles', userauth_views.ProfileViewSet)
 
 # Vendor
 router.register('vendors/vendors', vendor_views.VendorViewSet)
+router.register('vendors/brands', vendor_views.BrandViewSet)
 router.register('vendors/collections', vendor_views.CollectionViewSet)
 router.register('vendors/parts', vendor_views.PartViewSet)
+router.register('vendors/order-responses', vendor_views.OrderResponseViewSet)
 
 
 # Store
 router.register('store/vendees', store_views.VendeeViewSet)
 router.register('store/orders', store_views.OrderViewSet)
 router.register('store/order-items', store_views.OrderItemViewSet)
+router.register('store/selected-vendors', store_views.SelecteVendorViewSet)
 
 urlpatterns = [
     # path('user/', include('rest_framework.urls')),

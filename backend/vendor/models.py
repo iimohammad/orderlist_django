@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from djmoney.models.fields import MoneyField
+from store.models import Order, Vendee
 
 
 # Create your models
@@ -84,6 +85,7 @@ class Part(models.Model):
         
         
 class PartImage(models.Model):
+    """Represents a part Image entity"""
     part = models.ForeignKey(
         Part, on_delete=models.CASCADE, related_name='images')
     part_image = models.ImageField(
@@ -94,3 +96,35 @@ class PartImage(models.Model):
     class Meta:
         db_table = 'PartImage'
         verbose_name_plural = 'images'
+        
+        
+class OrderResponse(models.Model):
+    """Represents an order response entity"""
+    
+    # Types of Response
+    RESPONSE_AVAILABLE = 'A'
+    RESPONSE_NOT_AVAILABLE = 'NA'
+    RESPONSE_NOT_RELATED = 'NR'
+    RESPONSE_PENDING = 'P'
+    RESPONSE_CHOICES = [
+        (RESPONSE_AVAILABLE, 'Available'),
+        (RESPONSE_NOT_AVAILABLE, 'Not Available'),
+        (RESPONSE_NOT_RELATED, 'Not Related'),
+        (RESPONSE_PENDING, 'Pending')
+    ]
+    vendor = models.ForeignKey(Vendor, on_delete=models.PROTECT)
+    order = models.ForeignKey(Order, on_delete=models.PROTECT)
+    response = models.CharField(
+        max_length=2,
+        choices=RESPONSE_CHOICES,
+        default=RESPONSE_PENDING)
+    delivery_date = models.DateField()
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.vendor.user.username
+    
+    
+    class Meta:
+        db_table = 'OrderResponse'
+        verbose_name_plural = 'OrderResponses'
