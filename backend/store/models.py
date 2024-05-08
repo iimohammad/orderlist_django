@@ -54,9 +54,9 @@ class SelectedVendor(models.Model):
     vendee = models.OneToOneField(Vendee, on_delete=models.CASCADE)
     vendor = models.ManyToManyField('vendor.Vendor')
     
+    def __str__(self):
+        return self.vendee.user.username
+    
     class Meta:
         db_table = 'SelectedVendor'
         verbose_name_plural = 'SelectedVendors'
-        
-    def __str__(self):
-        return self.vendee.user.username

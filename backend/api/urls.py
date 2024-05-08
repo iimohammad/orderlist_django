@@ -12,8 +12,10 @@ router.register('user/profiles', userauth_views.ProfileViewSet)
 
 # Vendor
 router.register('vendors/vendors', vendor_views.VendorViewSet)
+router.register('vendors/brands', vendor_views.BrandViewSet)
 router.register('vendors/collections', vendor_views.CollectionViewSet)
 router.register('vendors/parts', vendor_views.PartViewSet)
+router.register('vendors/order-responses', vendor_views.OrderResponseViewSet)
 
 
 # Store

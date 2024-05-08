@@ -12,7 +12,24 @@ class OrderItemSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = OrderItem
-        fields = ['id', 'quantity', 'part']
+        fields = ['id', 'quantity', 'part', 'order']
+        
+    # def create(self, validated_data):
+    #     order = validated_data['order']
+    #     part = validated_data['part']
+    #     quantity = validated_data['quantity']
+        
+    #     # Check if an order item with the same part already exists in the order
+    #     existing_order_item = OrderItem.objects.filter(order=order, part=part).first()
+        
+    #     if existing_order_item:
+    #         # If the order item already exists, update its quantity
+    #         existing_order_item.quantity += quantity
+    #         existing_order_item.save()
+    #         return existing_order_item
+    #     else:
+    #         # If the order item does not exist, create a new one
+    #         return super().create(validated_data)
             
 class OrderSerializer(serializers.ModelSerializer):
     # items = OrderItemSerializer(many=True)

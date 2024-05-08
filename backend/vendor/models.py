@@ -121,6 +121,9 @@ class OrderResponse(models.Model):
     delivery_date = models.DateField()
     description = models.TextField()
     
+    def __str__(self):
+        return self.vendor.user.username
+    
     
     class Meta:
         db_table = 'OrderResponse'
