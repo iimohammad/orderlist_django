@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.mixins import CreateModelMixin, RetrieveModelMixin, UpdateModelMixin
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.mixins import RetrieveModelMixin, UpdateModelMixin
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
 from userauths.models import User, Profile
 from userauths.serializers import (
@@ -110,7 +110,7 @@ class Phone_Verification(generics.UpdateAPIView):
         if user.otp == serializer.validated_data.get('otp'):
             user.is_verify_phone = True
             user.save()
-            
+
             return Response(serializer.data)
         else:
             return Response({'detail': 'Invalid OTP or unauthorized user.'}, status=status.HTTP_400_BAD_REQUEST)
