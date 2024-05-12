@@ -27,9 +27,9 @@ class User(AbstractUser):
             self.username = email_username
 
         super().save(*args, **kwargs)
-
-
-class Profile(models.Model):
+        
+        
+class Membership(models.Model):
     
     # Types of Membership
     MEMBERSHIP_FREE = 'F'
@@ -42,6 +42,19 @@ class Profile(models.Model):
         (MEMBERSHIP_SILVER, 'Silver'),
         (MEMBERSHIP_GOLD, 'Gold')
     ]
+    
+    membership = models.CharField(
+        max_length=1,
+        choices=MEMBERSHIP_CHOICES,
+        default=MEMBERSHIP_FREE)
+    
+    class Meta:
+        db_table = 'Membership'
+
+
+class Profile(models.Model):
+    
+    
     
     #Types of formal status
     STATUS_PERSONAL = 'P'
@@ -61,6 +74,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
+    membership = models.OneToOneField(Membership, on_delete=models.PROTECT, primary_key=True)
     pid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet ="abcdefghijk")  
     company_name = models.CharField(
         max_length=255,
@@ -71,10 +85,6 @@ class Profile(models.Model):
         blank=True,
         null=True)
     company_email = models.EmailField(blank=True, null=True)
-    membership = models.CharField(
-        max_length=1,
-        choices=MEMBERSHIP_CHOICES,
-        default=MEMBERSHIP_FREE)
     formal_status = models.CharField(
         max_length=1,
         choices=FORMAL_STATUS_CHOICES,
