@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'vendor',
     'userauths',
     'store',
+    'finance',
     
     # Third Party Apps
     'rest_framework',
