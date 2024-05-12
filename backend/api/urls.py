@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 from userauths import views as userauth_views
 from store import views as store_views
@@ -25,13 +25,15 @@ router.register('store/order-items', store_views.OrderItemViewSet)
 router.register('store/selected-vendors', store_views.SelecteVendorViewSet)
 
 urlpatterns = [
-    path('user/token/', userauth_views.MyTokenObtainPairView.as_view()),
-    path('user/token/refresh/', TokenRefreshView.as_view()),
+    # path('user/', include('rest_framework.urls')),
+    # path('user/token/', userauth_views.MyTokenObtainPairView.as_view()),
+    # path('user/token/refresh/', TokenRefreshView.as_view()),
     path('user/register/', userauth_views.RegisterView.as_view()),
     path('user/password-reset/<email>/', userauth_views.PasswordResetEmailVerify.as_view()),
     path('user/password-change/', userauth_views.PasswordChangedView.as_view()),
     path('user/email-verification/<str:email>/', userauth_views.Email_Verification.as_view()),
-
+    path('user/phone-verification/', userauth_views.Phone_Verification_send_sms.as_view()),
+    path('user/phone-verification-code/', userauth_views.Phone_Verification.as_view()),
 ] + router.urls
 
 
