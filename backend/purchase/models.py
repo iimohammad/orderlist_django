@@ -3,7 +3,7 @@ from userauths.models import User
 from uuid import uuid4
 
 
-class wallet(models.Model):
+class Wallet(models.Model):
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
