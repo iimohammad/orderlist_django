@@ -28,8 +28,9 @@ class User(AbstractUser):
 
         super().save(*args, **kwargs)
         
-        
-class Membership(models.Model):
+
+
+class Profile(models.Model):
     
     # Types of Membership
     MEMBERSHIP_FREE = 'F'
@@ -42,18 +43,6 @@ class Membership(models.Model):
         (MEMBERSHIP_SILVER, 'Silver'),
         (MEMBERSHIP_GOLD, 'Gold')
     ]
-    
-    membership = models.CharField(
-        max_length=1,
-        choices=MEMBERSHIP_CHOICES,
-        default=MEMBERSHIP_FREE)
-    
-    class Meta:
-        db_table = 'Membership'
-
-
-class Profile(models.Model):
-    
     
     
     #Types of formal status
@@ -74,11 +63,10 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    membership = models.OneToOneField(
-        Membership,
-        on_delete=models.SET_DEFAULT,
-        default='F',
-        primary_key=True)
+    membership = models.CharField(
+        max_length=1,
+        choices=MEMBERSHIP_CHOICES,
+        default=MEMBERSHIP_FREE)
     pid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet ="abcdefghijk")  
     company_name = models.CharField(
         max_length=255,
