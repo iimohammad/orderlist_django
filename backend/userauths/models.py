@@ -74,7 +74,11 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    membership = models.OneToOneField(Membership, on_delete=models.PROTECT, primary_key=True)
+    membership = models.OneToOneField(
+        Membership,
+        on_delete=models.SET_DEFAULT,
+        default='F',
+        primary_key=True)
     pid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet ="abcdefghijk")  
     company_name = models.CharField(
         max_length=255,
