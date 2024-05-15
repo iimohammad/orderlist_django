@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from shortuuid.django_fields import ShortUUIDField
 from django.db.models.signals import post_save
+from membership.models import Membership
 
 
 class User(AbstractUser):
@@ -32,19 +33,6 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     
-    # Types of Membership
-    MEMBERSHIP_FREE = 'F'
-    MEMBERSHIP_BRONZE = 'B'
-    MEMBERSHIP_SILVER = 'S'
-    MEMBERSHIP_GOLD = 'G'
-    MEMBERSHIP_CHOICES = [
-        (MEMBERSHIP_FREE, 'Free'),
-        (MEMBERSHIP_BRONZE, 'Bronze'),
-        (MEMBERSHIP_SILVER, 'Silver'),
-        (MEMBERSHIP_GOLD, 'Gold')
-    ]
-    
-    
     #Types of formal status
     STATUS_PERSONAL = 'P'
     STATUS_COMPANY = 'C'
@@ -63,10 +51,7 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    membership = models.CharField(
-        max_length=1,
-        choices=MEMBERSHIP_CHOICES,
-        default=MEMBERSHIP_FREE)
+    membership = models.ForeignKey(Membership, on_delete=models.PROTECT)
     pid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet ="abcdefghijk")  
     company_name = models.CharField(
         max_length=255,
