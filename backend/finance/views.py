@@ -2,12 +2,14 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from .models import PurchaseOrder, PurchaseOrderItem
 from .serializers import PurchaseOrderItemSerializer, PurchaseOrderSerializer
+from .pagination import DefaultPagination
 
 
 class PurchaseOrderViewSet(viewsets.ModelViewSet):
     queryset = PurchaseOrder.objects.all()
     serializer_class = PurchaseOrderSerializer
     # permission_classes = [permissions.IsAuthenticated]
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
         if self.request.user.is_staff:
@@ -21,6 +23,7 @@ class PurchaseOrderViewSet(viewsets.ModelViewSet):
 class PurchaseOrderItemViewSet(viewsets.ModelViewSet):
     serializer_class = PurchaseOrderItemSerializer
     # permission_classes = [permissions.IsAuthenticated]
+    pagination_class = DefaultPagination
 
     def get_queryset(self):
         if self.request.user.is_staff:
