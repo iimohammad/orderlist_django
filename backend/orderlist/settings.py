@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'store',
     'finance',
     'purchase',
+    'tags',
+    'membership',
     
     # Third Party Apps
     'rest_framework',

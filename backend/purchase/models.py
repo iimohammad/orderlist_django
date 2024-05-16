@@ -1,6 +1,6 @@
 from django.db import models
 from store.models import Product
-from user_panel.models import CustomUser
+from userauths.models import CustomUser
 from uuid import uuid4
 
 

@@ -6,6 +6,7 @@ from rest_framework.routers import DefaultRouter
 from vendor import views as vendor_views
 from store import views as store_views
 from finance import views as finance_views
+from membership import views as membership_views
 
 
 router = DefaultRouter()
@@ -29,6 +30,9 @@ router.register('store/selected-vendors', store_views.SelecteVendorViewSet)
 #finance
 router.register('finance/PurchaseOrder', finance_views.PurchaseOrderViewSet, basename='PurchaseOrder')
 router.register('finance/PurchaseOrderItem', finance_views.PurchaseOrderItemViewSet, basename='PurchaseOrderItem')
+
+#membership
+router.register('membership/memberships', membership_views.MembershipViewSet)
 
 urlpatterns = [
     # path('user/', include('rest_framework.urls')),

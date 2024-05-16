@@ -4,19 +4,23 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Vendee, Order, OrderItem, SelectedVendor
 from .serializers import VendeeSerializer, OrderSerializer, OrderItemSerializer, SelectedVendorSerializer
+from .pagination import DefaultPagination
 
 # Create your views here.
 class VendeeViewSet(ModelViewSet):
     queryset = Vendee.objects.all()
     serializer_class = VendeeSerializer
+    pagination_class = DefaultPagination
     
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+    pagination_class = DefaultPagination
     
 class OrderItemViewSet(ModelViewSet):
     queryset = OrderItem.objects.all()
     serializer_class = OrderItemSerializer
+    pagination_class = DefaultPagination
     
     def create(self, request, *args, **kwargs):
         order = Order.objects.get(pk=request.data['order'])
@@ -39,3 +43,4 @@ class OrderItemViewSet(ModelViewSet):
 class SelecteVendorViewSet(ModelViewSet):
     queryset = SelectedVendor.objects.all()
     serializer_class = SelectedVendorSerializer
+    pagination_class = DefaultPagination

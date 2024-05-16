@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from store.models import Product
-from user_panel.models import CustomUser
+from userauths.models import CustomUser
 from .models import wallet, Cart, CartItem
-from user_panel.serializers import CustomUserSerializer
+from userauths.serializers import CustomUserSerializer
 
 
 class ProfileSerializer(serializers.ModelSerializer):

@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework import mixins, viewsets
 from .models import Cart, CartItem
 from .serializers import CartSerializer, CartItemSerializer
-from user_panel.models import Profile
+from userauths.models import Profile
 from rest_framework.permissions import IsAuthenticated
 
 class ProfileViewSet(viewsets.ModelViewSet):
