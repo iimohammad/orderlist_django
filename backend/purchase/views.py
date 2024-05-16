@@ -13,11 +13,6 @@ from .serializers import CartSerializer, CartItemSerializer
 from userauths.models import Profile
 from rest_framework.permissions import IsAuthenticated
 
-class ProfileViewSet(viewsets.ModelViewSet):
-    serializer_class = ProfileSerializer
-    queryset = Profile.objects.all()
-    # permission_classes = [permissions.IsAdminUser]
-
 
 class CartViewSet(viewsets.ModelViewSet):
     queryset = Cart.objects.all()
@@ -30,12 +25,12 @@ class CartViewSet(viewsets.ModelViewSet):
         return Cart.objects.filter(owner=self.request.user)
     
 
-    # @action(detail=True, methods=['post'])
-    # def checkout(self, request, pk=None):
-    #     cart = self.get_object()
+    @action(detail=True, methods=['post'])
+    def checkout(self, request, pk=None):
+        cart = self.get_object()
 
-    #     if cart.items.count() == 0:
-    #         return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
+        if cart.items.count() == 0:
+            return Response({"error": "Cart is empty"}, status=status.HTTP_400_BAD_REQUEST)
 
         # try:
         #     with transaction.atomic():
