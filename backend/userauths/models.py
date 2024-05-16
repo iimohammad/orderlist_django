@@ -51,7 +51,11 @@ class Profile(models.Model):
     city = models.CharField(max_length=100, null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
-    membership = models.ForeignKey(Membership, on_delete=models.PROTECT)
+    membership = models.ForeignKey(
+        Membership,
+        on_delete=models.PROTECT,
+        blank=True,
+        null=True)
     pid = ShortUUIDField(unique=True, length=10, max_length=20, alphabet ="abcdefghijk")  
     company_name = models.CharField(
         max_length=255,
